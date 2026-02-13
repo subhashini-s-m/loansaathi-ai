@@ -1,3 +1,6 @@
+# NidhiSaarthi – Government Loan Advisor  
+Built by Team <Your Team Name> for INCEPTO Hackathon 2026.
+
 # Welcome to your Lovable project
 
 ## Project info
