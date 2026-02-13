@@ -1,76 +1,62 @@
-# NidhiSaarthi – Government Loan Advisor  
-Built by Team <Your Team Name> for INCEPTO Hackathon 2026.
+# NidhiSaarthi – Government Loan Advisor 🇮🇳  
+**Multilingual, Explainable AI for Financial Inclusion (INCEPTO Hackathon 2026)**
 
-# Welcome to your Lovable project
+NidhiSaarthi is a government-grade AI loan guidance platform designed to help citizens understand loan eligibility, receive transparent explanations for approval/rejection, and get a personalized roadmap to improve their chances — with multilingual and voice-first access for inclusivity.
 
-## Project info
+---
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚩 Problem
+Accessing loan information is complex for many citizens due to:
+- Low financial literacy  
+- Language barriers  
+- Opaque bank decisions (“rejected” with no reasons)  
+- Repeated rejections that hurt credit scores  
 
-## How can I edit this code?
+This leads to frustration, misinformation, and exclusion from formal credit systems.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 💡 Solution
+NidhiSaarthi provides an **AI-powered, privacy-first public service platform** that:
+- Predicts loan approval probability  
+- Explains decisions using Explainable AI  
+- Guides users with actionable next steps  
+- Supports **English, Hindi, and Tamil**  
+- Offers **voice + text** interaction  
+- Helps users prepare with document checklists and readiness guidance  
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Designed for real-world government deployment and scalability.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## ✨ Key Features
+- **Multilingual + Voice-First Chatbot** (EN / हिंदी / தமிழ்)  
+- **Explainable AI Dashboard** – transparent reasons behind decisions  
+- **What-If Simulator** – see how changes affect eligibility  
+- **Smart Document Checklist Generator** – personalized document list  
+- **Eligibility Gap Breakdown** – what’s blocking approval right now  
+- **Application Readiness Indicator** – when to apply again (protects credit score)  
+- **Admin Dashboard** – anonymized insights for deployment analytics  
+- **Privacy & Ethics by Design** – consent-based, no biometric storage  
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🏗️ Tech Stack
+- **Frontend:** React + TypeScript (Vite, shadcn/ui)  
+- **AI/Logic:** ML risk model + Explainable AI + LLM-based guidance  
+- **Architecture:** Modular SaaS-ready design  
+- **Accessibility:** Multilingual i18n + voice interaction  
+- **Deployment:** Web-based prototype (Lovable)  
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🎥 Demo
+- **Live Prototype:** <PASTE YOUR LOVABLE PREVIEW LINK HERE>  
+- **Demo Video (5 mins):** <PASTE YOUR YOUTUBE/DRIVE LINK HERE>  
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## 🚀 Getting Started (Local Dev)
+```bash
+npm install
 npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
