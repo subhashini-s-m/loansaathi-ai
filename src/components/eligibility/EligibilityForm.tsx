@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import type { LoanFormData } from '@/types/loan';
 import { educationOptions, employmentOptions, loanPurposeOptions } from '@/data/mockData';
 import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 interface EligibilityFormProps {
   initialData?: LoanFormData;
@@ -24,6 +25,7 @@ const defaults: LoanFormData = {
 
 const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
   const [form, setForm] = useState<LoanFormData>(initialData ?? defaults);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (initialData) setForm(initialData);
@@ -39,7 +41,7 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
     >
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="income">Monthly Income (₹)</Label>
+          <Label htmlFor="income">{t('form_income')}</Label>
           <Input
             id="income"
             type="number"
@@ -49,7 +51,7 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="loanAmount">Loan Amount (₹)</Label>
+          <Label htmlFor="loanAmount">{t('form_loan_amount')}</Label>
           <Input
             id="loanAmount"
             type="number"
@@ -62,7 +64,7 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label>Education Level</Label>
+          <Label>{t('form_education')}</Label>
           <Select value={form.education} onValueChange={v => update('education', v)}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -71,7 +73,7 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
           </Select>
         </div>
         <div className="space-y-2">
-          <Label>Employment Type</Label>
+          <Label>{t('form_employment')}</Label>
           <Select value={form.employmentType} onValueChange={v => update('employmentType', v)}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -83,7 +85,7 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-2">
-          <Label htmlFor="creditScore">Credit Score</Label>
+          <Label htmlFor="creditScore">{t('form_credit_score')}</Label>
           <Input
             id="creditScore"
             type="number"
@@ -94,7 +96,7 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="existingLoans">Existing Loans</Label>
+          <Label htmlFor="existingLoans">{t('form_existing_loans')}</Label>
           <Input
             id="existingLoans"
             type="number"
@@ -104,7 +106,7 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
           />
         </div>
         <div className="space-y-2">
-          <Label>Loan Purpose</Label>
+          <Label>{t('form_loan_purpose')}</Label>
           <Select value={form.loanPurpose} onValueChange={v => update('loanPurpose', v)}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -115,7 +117,7 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
       </div>
 
       <Button type="submit" variant="saffron" size="lg" className="w-full">
-        Analyze My Eligibility
+        {t('form_submit')}
         <ArrowRight className="ml-1 h-4 w-4" />
       </Button>
     </form>

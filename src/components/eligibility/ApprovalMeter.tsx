@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 interface ApprovalMeterProps {
   probability: number;
 }
 
 const ApprovalMeter = ({ probability }: ApprovalMeterProps) => {
+  const { t } = useLanguage();
   const radius = 70;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (probability / 100) * circumference;
@@ -15,7 +17,7 @@ const ApprovalMeter = ({ probability }: ApprovalMeterProps) => {
       ? 'hsl(var(--risk-medium))'
       : 'hsl(var(--risk-high))';
 
-  const label = probability >= 65 ? 'Good' : probability >= 40 ? 'Moderate' : 'Low';
+  const label = probability >= 65 ? t('result_good') : probability >= 40 ? t('result_moderate') : t('result_low');
 
   return (
     <div className="flex flex-col items-center">
@@ -52,10 +54,10 @@ const ApprovalMeter = ({ probability }: ApprovalMeterProps) => {
           className="fill-muted-foreground text-sm"
           style={{ fontSize: '0.8rem', fontFamily: 'Plus Jakarta Sans, sans-serif' }}
         >
-          {label} Chance
+          {label} {t('result_chance')}
         </text>
       </svg>
-      <p className="mt-2 text-sm font-medium text-muted-foreground">Approval Probability</p>
+      <p className="mt-2 text-sm font-medium text-muted-foreground">{t('result_approval')}</p>
     </div>
   );
 };

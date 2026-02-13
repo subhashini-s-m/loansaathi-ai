@@ -6,6 +6,7 @@ import { recalculateWithChanges } from '@/utils/loanCalculator';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, TrendingUp } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 interface WhatIfSimulatorProps {
   originalData: LoanFormData;
@@ -15,6 +16,7 @@ interface WhatIfSimulatorProps {
 const WhatIfSimulator = ({ originalData, originalProbability }: WhatIfSimulatorProps) => {
   const [income, setIncome] = useState(originalData.income);
   const [loanAmount, setLoanAmount] = useState(originalData.loanAmount);
+  const { t } = useLanguage();
 
   const newProbability = useMemo(
     () => recalculateWithChanges(originalData, income, loanAmount),
@@ -35,16 +37,16 @@ const WhatIfSimulator = ({ originalData, originalProbability }: WhatIfSimulatorP
           <SlidersHorizontal className="h-4 w-4 text-accent" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-foreground">What-If Simulator</h3>
-          <p className="text-xs text-muted-foreground">AI-powered Financial Planning Tool</p>
+          <h3 className="text-lg font-semibold text-foreground">{t('whatif_title')}</h3>
+          <p className="text-xs text-muted-foreground">{t('whatif_subtitle')}</p>
         </div>
-        <Badge variant="outline" className="ml-auto bg-accent/10 text-accent border-accent/20">Interactive</Badge>
+        <Badge variant="outline" className="ml-auto bg-accent/10 text-accent border-accent/20">{t('whatif_interactive')}</Badge>
       </div>
 
       <div className="space-y-6">
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <Label>Monthly Income</Label>
+            <Label>{t('whatif_income')}</Label>
             <span className="text-sm font-semibold text-foreground">₹{income.toLocaleString('en-IN')}</span>
           </div>
           <Slider
@@ -58,7 +60,7 @@ const WhatIfSimulator = ({ originalData, originalProbability }: WhatIfSimulatorP
 
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <Label>Loan Amount</Label>
+            <Label>{t('whatif_loan')}</Label>
             <span className="text-sm font-semibold text-foreground">₹{loanAmount.toLocaleString('en-IN')}</span>
           </div>
           <Slider
@@ -71,7 +73,7 @@ const WhatIfSimulator = ({ originalData, originalProbability }: WhatIfSimulatorP
         </div>
 
         <div className="rounded-lg border border-border bg-secondary/50 p-4 text-center">
-          <p className="mb-1 text-sm text-muted-foreground">Updated Approval Probability</p>
+          <p className="mb-1 text-sm text-muted-foreground">{t('whatif_updated')}</p>
           <div className="flex items-center justify-center gap-3">
             <span className="text-3xl font-bold text-foreground">{newProbability}%</span>
             {diff !== 0 && (
@@ -83,7 +85,7 @@ const WhatIfSimulator = ({ originalData, originalProbability }: WhatIfSimulatorP
           </div>
           {income !== originalData.income && (
             <p className="mt-2 text-xs text-muted-foreground">
-              If income changes to ₹{income.toLocaleString('en-IN')} → Approval becomes {newProbability}%
+              {t('whatif_if_income')} ₹{income.toLocaleString('en-IN')} → {t('whatif_approval_becomes')} {newProbability}%
             </p>
           )}
         </div>
