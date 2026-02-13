@@ -1,17 +1,28 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Menu, X } from 'lucide-react';
+import { Shield, Menu, X, LogIn, LogOut, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from '@/i18n/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
+import type { Language } from '@/i18n/translations';
+
+const languageOptions: { code: Language; label: string }[] = [
+  { code: 'en', label: '🇬🇧 EN' },
+  { code: 'hi', label: '🇮🇳 हिंदी' },
+  { code: 'ta', label: '🇮🇳 தமிழ்' },
+];
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { t, language, setLanguage } = useLanguage();
+  const { user, logout } = useAuth();
 
   const navLinks = [
-    { label: 'Home', path: '/' },
-    { label: 'Check Eligibility', path: '/eligibility' },
-    { label: 'Privacy & Ethics', path: '/privacy' },
+    { label: t('nav_home'), path: '/' },
+    { label: t('nav_eligibility'), path: '/eligibility' },
+    { label: t('nav_privacy'), path: '/privacy' },
   ];
 
   return (
@@ -22,7 +33,7 @@ const Header = () => {
             <Shield className="h-5 w-5 text-primary-foreground" />
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-foreground">LoanSaathi</span>
+            <span className="text-lg font-bold text-foreground">NidhiSaarthi</span>
             <span className="text-lg font-bold text-gradient-hero">AI</span>
           </div>
         </Link>
@@ -38,9 +49,44 @@ const Header = () => {
               </Button>
             </Link>
           ))}
-          <Badge variant="outline" className="ml-3 border-saffron/30 bg-saffron/5 text-saffron">
-            🧪 Demo Mode
-          </Badge>
+
+          {user?.role === 'admin' && (
+            <Link to="/admin">
+              <Button variant={location.pathname === '/admin' ? 'secondary' : 'ghost'} size="sm">
+                {t('nav_admin')}
+              </Button>
+            </Link>
+          )}
+
+          <div className="ml-2 flex items-center gap-0.5 rounded-lg border border-border bg-secondary/50 p-0.5">
+            {languageOptions.map(opt => (
+              <button
+                key={opt.code}
+                onClick={() => setLanguage(opt.code)}
+                className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+                  language === opt.code
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+
+          {user ? (
+            <Button variant="ghost" size="sm" className="ml-2" onClick={logout}>
+              <LogOut className="mr-1 h-4 w-4" />
+              {t('nav_logout')}
+            </Button>
+          ) : (
+            <Link to="/login">
+              <Button variant="ghost" size="sm" className="ml-2">
+                <LogIn className="mr-1 h-4 w-4" />
+                {t('nav_login')}
+              </Button>
+            </Link>
+          )}
         </nav>
 
         <Button
@@ -63,9 +109,44 @@ const Header = () => {
                 </Button>
               </Link>
             ))}
-            <Badge variant="outline" className="mt-2 w-fit border-saffron/30 bg-saffron/5 text-saffron">
-              🧪 Demo Mode (Hackathon)
-            </Badge>
+
+            {user?.role === 'admin' && (
+              <Link to="/admin" onClick={() => setMobileOpen(false)}>
+                <Button variant={location.pathname === '/admin' ? 'secondary' : 'ghost'} className="w-full justify-start">
+                  {t('nav_admin')}
+                </Button>
+              </Link>
+            )}
+
+            {user ? (
+              <Button variant="ghost" className="w-full justify-start" onClick={() => { logout(); setMobileOpen(false); }}>
+                <LogOut className="mr-1 h-4 w-4" />
+                {t('nav_logout')}
+              </Button>
+            ) : (
+              <Link to="/login" onClick={() => setMobileOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start">
+                  <LogIn className="mr-1 h-4 w-4" />
+                  {t('nav_login')}
+                </Button>
+              </Link>
+            )}
+
+            <div className="mt-2 flex items-center gap-1">
+              {languageOptions.map(opt => (
+                <button
+                  key={opt.code}
+                  onClick={() => setLanguage(opt.code)}
+                  className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors border ${
+                    language === opt.code
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : 'text-muted-foreground border-border hover:text-foreground'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </nav>
         </div>
       )}
