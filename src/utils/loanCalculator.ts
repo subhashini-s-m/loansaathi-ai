@@ -1,13 +1,13 @@
 import type { LoanFormData, LoanResult, RiskFactor, RoadmapStep, BankRecommendation } from '@/types/loan';
 
 export function calculateLoanResult(data: LoanFormData): LoanResult {
-  const incomeRatio = data.loanAmount / (data.income * 12);
-  const creditFactor = data.creditScore / 900;
-  const loanBurden = data.existingLoans > 2 ? 0.3 : data.existingLoans > 0 ? 0.7 : 1;
+  const incomeRatio = data.loan_amount / (data.monthly_income * 12);
+  const creditFactor = data.credit_score / 900;
+  const loanBurden = data.existing_loans > 2 ? 0.3 : data.existing_loans > 0 ? 0.7 : 1;
   const educationFactor = data.education === 'Graduate' ? 0.9 : data.education === 'Post Graduate' ? 1 : 0.6;
 
   let probability = Math.round(
-    (creditFactor * 35 + (1 - Math.min(incomeRatio, 1)) * 25 + loanBurden * 20 + educationFactor * 20) 
+    (creditFactor * 35 + (1 - Math.min(incomeRatio, 1)) * 25 + loanBurden * 20 + educationFactor * 20)
   );
   probability = Math.max(10, Math.min(95, probability));
 
@@ -17,33 +17,33 @@ export function calculateLoanResult(data: LoanFormData): LoanResult {
   const factors: RiskFactor[] = [
     {
       name: 'Credit Score',
-      level: data.creditScore >= 700 ? 'low' : data.creditScore >= 550 ? 'medium' : 'high',
-      description: `Your credit score of ${data.creditScore} is ${data.creditScore >= 700 ? 'healthy' : data.creditScore >= 550 ? 'moderate' : 'below recommended threshold'}`,
-      improvement: data.creditScore < 700 ? 'Pay bills on time and reduce credit utilization below 30%' : 'Maintain current credit habits',
+      level: data.credit_score >= 700 ? 'low' : data.credit_score >= 550 ? 'medium' : 'high',
+      description: `Your credit score of ${data.credit_score} is ${data.credit_score >= 700 ? 'healthy' : data.credit_score >= 550 ? 'moderate' : 'below recommended threshold'}`,
+      improvement: data.credit_score < 700 ? 'Pay bills on time and reduce credit utilization below 30%' : 'Maintain current credit habits',
     },
     {
       name: 'Income Stability',
-      level: data.income >= 40000 ? 'low' : data.income >= 20000 ? 'medium' : 'high',
-      description: `Monthly income of ₹${data.income.toLocaleString('en-IN')} ${data.income >= 40000 ? 'meets' : 'is below'} standard benchmarks`,
-      improvement: data.income < 40000 ? 'Consider additional income sources or skill upgrades' : 'Stable income is favorable',
+      level: data.monthly_income >= 40000 ? 'low' : data.monthly_income >= 20000 ? 'medium' : 'high',
+      description: `Monthly income of ₹${data.monthly_income.toLocaleString('en-IN')} ${data.monthly_income >= 40000 ? 'meets' : 'is below'} standard benchmarks`,
+      improvement: data.monthly_income < 40000 ? 'Consider additional income sources or skill upgrades' : 'Stable income is favorable',
     },
     {
       name: 'Existing Loan Burden',
-      level: data.existingLoans === 0 ? 'low' : data.existingLoans <= 2 ? 'medium' : 'high',
-      description: `${data.existingLoans} active loan(s) — ${data.existingLoans > 2 ? 'high debt burden' : 'manageable'}`,
-      improvement: data.existingLoans > 0 ? 'Clear small debts to improve debt-to-income ratio' : 'No existing burden — favorable',
+      level: data.existing_loans === 0 ? 'low' : data.existing_loans <= 2 ? 'medium' : 'high',
+      description: `${data.existing_loans} active loan(s) — ${data.existing_loans > 2 ? 'high debt burden' : 'manageable'}`,
+      improvement: data.existing_loans > 0 ? 'Clear small debts to improve debt-to-income ratio' : 'No existing burden — favorable',
     },
     {
       name: 'Loan-to-Income Ratio',
       level: incomeRatio < 3 ? 'low' : incomeRatio < 6 ? 'medium' : 'high',
-      description: `Requested ₹${data.loanAmount.toLocaleString('en-IN')} is ${incomeRatio.toFixed(1)}x your annual income`,
+      description: `Requested ₹${data.loan_amount.toLocaleString('en-IN')} is ${incomeRatio.toFixed(1)}x your annual income`,
       improvement: incomeRatio >= 3 ? 'Consider a smaller loan amount or increase savings' : 'Ratio is within healthy limits',
     },
   ];
 
   const roadmap: RoadmapStep[] = [];
-  if (data.existingLoans > 0) roadmap.push({ step: roadmap.length + 1, title: 'Clear Small Debts', description: 'Pay off smallest loans first to reduce burden and improve credit mix', duration: '30–60 days' });
-  if (data.creditScore < 700) roadmap.push({ step: roadmap.length + 1, title: 'Improve Credit Score', description: 'Make timely payments and keep utilization below 30%', duration: '60–90 days' });
+  if (data.existing_loans > 0) roadmap.push({ step: roadmap.length + 1, title: 'Clear Small Debts', description: 'Pay off smallest loans first to reduce burden and improve credit mix', duration: '30–60 days' });
+  if (data.credit_score < 700) roadmap.push({ step: roadmap.length + 1, title: 'Improve Credit Score', description: 'Make timely payments and keep utilization below 30%', duration: '60–90 days' });
   roadmap.push({ step: roadmap.length + 1, title: 'Build Emergency Savings', description: 'Save at least 3 months of expenses before applying', duration: '60 days' });
   roadmap.push({ step: roadmap.length + 1, title: 'Apply to Recommended Bank', description: 'Use our matched bank suggestions for highest approval chances', duration: '7–14 days' });
 
@@ -57,6 +57,6 @@ export function calculateLoanResult(data: LoanFormData): LoanResult {
 }
 
 export function recalculateWithChanges(original: LoanFormData, incomeOverride: number, loanOverride: number): number {
-  const modified = { ...original, income: incomeOverride, loanAmount: loanOverride };
+  const modified = { ...original, monthly_income: incomeOverride, loan_amount: loanOverride };
   return calculateLoanResult(modified).approvalProbability;
 }

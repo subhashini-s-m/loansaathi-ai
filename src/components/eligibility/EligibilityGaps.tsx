@@ -22,25 +22,25 @@ const EligibilityGaps = ({ formData, approvalProbability }: EligibilityGapsProps
   const gaps: Gap[] = [];
   const fixes: string[] = [];
 
-  const incomeRatio = formData.loanAmount / (formData.income * 12);
+  const incomeRatio = formData.loan_amount / (formData.monthly_income * 12);
 
-  if (formData.income < 25000) {
+  if (formData.monthly_income < 25000) {
     gaps.push({ messageKey: 'gaps_income_low', priority: 1 });
     fixes.push(t('gaps_income_low'));
   }
   if (incomeRatio > 4) {
     gaps.push({ messageKey: 'gaps_ratio_high', priority: 2 });
   }
-  if (formData.creditScore < 600) {
+  if (formData.credit_score < 600) {
     gaps.push({ messageKey: 'gaps_credit_low', priority: 1 });
     fixes.push(t('gaps_credit_low'));
   }
-  if (formData.existingLoans > 2) {
+  if (formData.existing_loans > 2) {
     gaps.push({ messageKey: 'gaps_existing_high', priority: 2 });
     fixes.push(t('gaps_existing_high'));
   }
-  const emiEstimate = formData.loanAmount * 0.02;
-  if (emiEstimate / formData.income > 0.5) {
+  const emiEstimate = formData.loan_amount * 0.02;
+  if (emiEstimate / formData.monthly_income > 0.5) {
     gaps.push({ messageKey: 'gaps_emi_high', priority: 1 });
   }
 

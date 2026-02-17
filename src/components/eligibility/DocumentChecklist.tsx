@@ -25,16 +25,16 @@ const DocumentChecklist = ({ formData }: DocumentChecklistProps) => {
   ];
 
   const conditionalDocs: DocItem[] = [
-    { key: 'doc_income_proof', condition: formData.employmentType === 'Salaried' },
-    { key: 'doc_itr', condition: formData.employmentType === 'Salaried' || formData.employmentType === 'Business' },
-    { key: 'doc_business_reg', condition: formData.employmentType === 'Business' || formData.employmentType === 'Self Employed' },
-    { key: 'doc_gst', condition: formData.employmentType === 'Business' },
-    { key: 'doc_admission', condition: formData.loanPurpose === 'Education' },
-    { key: 'doc_marksheets', condition: formData.loanPurpose === 'Education' || formData.employmentType === 'Student' },
-    { key: 'doc_land_records', condition: formData.loanPurpose === 'Agriculture' },
-    { key: 'doc_crop_details', condition: formData.loanPurpose === 'Agriculture' },
-    { key: 'doc_vehicle_quote', condition: formData.loanPurpose === 'Vehicle' },
-    { key: 'doc_property_docs', condition: formData.loanPurpose === 'Home' },
+    { key: 'doc_income_proof', condition: formData.job_type === 'Salaried' || formData.job_type === 'Government' },
+    { key: 'doc_itr', condition: formData.job_type === 'Salaried' || formData.job_type === 'Business' },
+    { key: 'doc_business_reg', condition: formData.job_type === 'Business' || formData.job_type === 'Self Employed' },
+    { key: 'doc_gst', condition: formData.job_type === 'Business' },
+    { key: 'doc_admission', condition: formData.loan_purpose === 'Education' },
+    { key: 'doc_marksheets', condition: formData.loan_purpose === 'Education' || formData.job_type === 'Student' },
+    { key: 'doc_land_records', condition: formData.loan_purpose === 'Agriculture' },
+    { key: 'doc_crop_details', condition: formData.loan_purpose === 'Agriculture' },
+    { key: 'doc_vehicle_quote', condition: formData.loan_purpose === 'Vehicle' },
+    { key: 'doc_property_docs', condition: formData.loan_purpose === 'Home' },
   ];
 
   const allDocs = [...baseDocs, ...conditionalDocs.filter(d => d.condition)];
