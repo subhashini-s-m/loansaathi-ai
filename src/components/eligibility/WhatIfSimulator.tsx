@@ -14,8 +14,8 @@ interface WhatIfSimulatorProps {
 }
 
 const WhatIfSimulator = ({ originalData, originalProbability }: WhatIfSimulatorProps) => {
-  const [income, setIncome] = useState(originalData.income);
-  const [loanAmount, setLoanAmount] = useState(originalData.loanAmount);
+  const [income, setIncome] = useState(originalData.monthly_income);
+  const [loanAmount, setLoanAmount] = useState(originalData.loan_amount);
   const { t } = useLanguage();
 
   const newProbability = useMemo(
@@ -83,7 +83,7 @@ const WhatIfSimulator = ({ originalData, originalProbability }: WhatIfSimulatorP
               </span>
             )}
           </div>
-          {income !== originalData.income && (
+          {income !== originalData.monthly_income && (
             <p className="mt-2 text-xs text-muted-foreground">
               {t('whatif_if_income')} ₹{income.toLocaleString('en-IN')} → {t('whatif_approval_becomes')} {newProbability}%
             </p>

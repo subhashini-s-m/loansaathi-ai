@@ -14,26 +14,26 @@ const ReadinessIndicator = ({ formData, approvalProbability }: ReadinessIndicato
   let waitDays = 0;
   const reasons: string[] = [];
 
-  if (formData.creditScore < 550) {
+  if (formData.credit_score < 550) {
     waitDays = Math.max(waitDays, 90);
     reasons.push(t('ready_reason_credit'));
-  } else if (formData.creditScore < 650) {
+  } else if (formData.credit_score < 650) {
     waitDays = Math.max(waitDays, 60);
     reasons.push(t('ready_reason_credit'));
   }
 
-  if (formData.existingLoans > 2) {
+  if (formData.existing_loans > 2) {
     waitDays = Math.max(waitDays, 60);
     reasons.push(t('ready_reason_loans'));
   }
 
-  const emiEstimate = formData.loanAmount * 0.02;
-  if (emiEstimate / formData.income > 0.5) {
+  const emiEstimate = formData.loan_amount * 0.02;
+  if (emiEstimate / formData.monthly_income > 0.5) {
     waitDays = Math.max(waitDays, 30);
     reasons.push(t('ready_reason_emi'));
   }
 
-  if (formData.income < 20000) {
+  if (formData.monthly_income < 20000) {
     waitDays = Math.max(waitDays, 60);
     reasons.push(t('ready_reason_savings'));
   }

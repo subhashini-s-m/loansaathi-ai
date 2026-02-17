@@ -14,7 +14,197 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analysis_results: {
+        Row: {
+          ai_explanation: Json | null
+          application_id: string
+          approval_probability: number | null
+          created_at: string
+          debt_to_income_ratio: number | null
+          emi_affordability: string | null
+          factors: Json | null
+          financial_health_score: number | null
+          id: string
+          recommended_banks: Json | null
+          risk_category: string | null
+          roadmap: Json | null
+        }
+        Insert: {
+          ai_explanation?: Json | null
+          application_id: string
+          approval_probability?: number | null
+          created_at?: string
+          debt_to_income_ratio?: number | null
+          emi_affordability?: string | null
+          factors?: Json | null
+          financial_health_score?: number | null
+          id?: string
+          recommended_banks?: Json | null
+          risk_category?: string | null
+          roadmap?: Json | null
+        }
+        Update: {
+          ai_explanation?: Json | null
+          application_id?: string
+          approval_probability?: number | null
+          created_at?: string
+          debt_to_income_ratio?: number | null
+          emi_affordability?: string | null
+          factors?: Json | null
+          financial_health_score?: number | null
+          id?: string
+          recommended_banks?: Json | null
+          risk_category?: string | null
+          roadmap?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analysis_results_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "loan_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          session_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          session_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          session_id?: string
+        }
+        Relationships: []
+      }
+      loan_applications: {
+        Row: {
+          age: number | null
+          bank_balance: number | null
+          car_year: number | null
+          created_at: string
+          credit_score: number | null
+          dependent_children: number | null
+          education: string | null
+          employer_name: string | null
+          existing_loans: number | null
+          family_members: number | null
+          gender: string | null
+          has_collateral: boolean | null
+          has_health_insurance: boolean | null
+          has_investments: boolean | null
+          has_life_insurance: boolean | null
+          has_vehicle_insurance: boolean | null
+          id: string
+          income_stability: string | null
+          job_type: string | null
+          language: string | null
+          loan_amount: number | null
+          loan_purpose: string | null
+          loan_tenure: number | null
+          location_city: string | null
+          location_state: string | null
+          marital_status: string | null
+          monthly_income: number | null
+          monthly_savings: number | null
+          owns_car: boolean | null
+          owns_house: boolean | null
+          property_value: number | null
+          secondary_income: boolean | null
+          session_id: string
+          total_monthly_expenses: number | null
+          years_experience: number | null
+        }
+        Insert: {
+          age?: number | null
+          bank_balance?: number | null
+          car_year?: number | null
+          created_at?: string
+          credit_score?: number | null
+          dependent_children?: number | null
+          education?: string | null
+          employer_name?: string | null
+          existing_loans?: number | null
+          family_members?: number | null
+          gender?: string | null
+          has_collateral?: boolean | null
+          has_health_insurance?: boolean | null
+          has_investments?: boolean | null
+          has_life_insurance?: boolean | null
+          has_vehicle_insurance?: boolean | null
+          id?: string
+          income_stability?: string | null
+          job_type?: string | null
+          language?: string | null
+          loan_amount?: number | null
+          loan_purpose?: string | null
+          loan_tenure?: number | null
+          location_city?: string | null
+          location_state?: string | null
+          marital_status?: string | null
+          monthly_income?: number | null
+          monthly_savings?: number | null
+          owns_car?: boolean | null
+          owns_house?: boolean | null
+          property_value?: number | null
+          secondary_income?: boolean | null
+          session_id: string
+          total_monthly_expenses?: number | null
+          years_experience?: number | null
+        }
+        Update: {
+          age?: number | null
+          bank_balance?: number | null
+          car_year?: number | null
+          created_at?: string
+          credit_score?: number | null
+          dependent_children?: number | null
+          education?: string | null
+          employer_name?: string | null
+          existing_loans?: number | null
+          family_members?: number | null
+          gender?: string | null
+          has_collateral?: boolean | null
+          has_health_insurance?: boolean | null
+          has_investments?: boolean | null
+          has_life_insurance?: boolean | null
+          has_vehicle_insurance?: boolean | null
+          id?: string
+          income_stability?: string | null
+          job_type?: string | null
+          language?: string | null
+          loan_amount?: number | null
+          loan_purpose?: string | null
+          loan_tenure?: number | null
+          location_city?: string | null
+          location_state?: string | null
+          marital_status?: string | null
+          monthly_income?: number | null
+          monthly_savings?: number | null
+          owns_car?: boolean | null
+          owns_house?: boolean | null
+          property_value?: number | null
+          secondary_income?: boolean | null
+          session_id?: string
+          total_monthly_expenses?: number | null
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
