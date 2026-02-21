@@ -26,6 +26,26 @@ const EligibilityPage = () => {
   useEffect(() => {
     if (sampleCase) {
       setFormData(sampleCase.formData as LoanFormData);
+    } else {
+      // Try to load pre-filled data from chat
+      const chatDataStr = sessionStorage.getItem('eligibility_chat_data');
+      if (chatDataStr) {
+        try {
+          const chatData = JSON.parse(chatDataStr);
+          // Pre-fill form with chat data
+          setFormData((prev) => ({
+            ...prev,
+            monthly_income: chatData.monthly_income || prev?.monthly_income,
+            loan_amount: chatData.loan_amount || prev?.loan_amount,
+            credit_score: chatData.credit_score || prev?.credit_score,
+            job_type: chatData.job_type || prev?.job_type,
+          } as LoanFormData));
+          // Clear sessionStorage so it doesn't apply on next visit
+          sessionStorage.removeItem('eligibility_chat_data');
+        } catch (e) {
+          console.error('Error parsing chat eligibility data:', e);
+        }
+      }
     }
   }, [demoId]);
 

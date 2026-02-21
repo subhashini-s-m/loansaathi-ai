@@ -21,6 +21,7 @@ export const translations = {
     hero_subtitle: 'ML-driven loan eligibility prediction, explainable AI decisions, and personalized financial roadmaps — in your language, with your voice.',
     hero_cta1: 'Check Loan Eligibility',
     hero_cta2: 'Try Sample Case',
+    hero_cta_advice: 'Get Financial Advice',
     hero_img_alt: 'Diverse Indian citizens connected through AI-powered financial services',
 
     // Trust
@@ -78,7 +79,7 @@ export const translations = {
     form_gender: 'Gender',
     form_marital: 'Marital Status',
     form_family: 'Family Members',
-    form_dependents: 'Dependent Children',
+    form_dependents: 'Dependent Family Members',
     form_city: 'City',
     form_state: 'State',
     form_job_type: 'Job Type',
@@ -106,6 +107,7 @@ export const translations = {
     form_credit_score: 'Credit Score',
     form_existing_loans: 'Existing Loans',
     form_loan_purpose: 'Loan Purpose',
+    form_co_borrower: 'Co-borrower Category',
     form_submit: 'Check My Eligibility',
 
     // Results
@@ -277,6 +279,7 @@ export const translations = {
     hero_subtitle: 'ML-संचालित ऋण पात्रता, व्याख्यात्मक AI निर्णय, और व्यक्तिगत वित्तीय रोडमैप।',
     hero_cta1: 'ऋण पात्रता जांचें',
     hero_cta2: 'नमूना केस आज़माएं',
+    hero_cta_advice: 'वित्तीय सलाह प्राप्त करें',
     hero_img_alt: 'AI वित्तीय सेवाएं',
 
     trust_privacy: 'गोपनीयता-प्रथम',
@@ -328,7 +331,7 @@ export const translations = {
     form_gender: 'लिंग',
     form_marital: 'वैवाहिक स्थिति',
     form_family: 'परिवार के सदस्य',
-    form_dependents: 'आश्रित बच्चे',
+    form_dependents: 'आश्रित परिवार के सदस्य',
     form_city: 'शहर',
     form_state: 'राज्य',
     form_job_type: 'नौकरी का प्रकार',
@@ -356,6 +359,7 @@ export const translations = {
     form_credit_score: 'क्रेडिट स्कोर',
     form_existing_loans: 'मौजूदा ऋण',
     form_loan_purpose: 'ऋण का उद्देश्य',
+    form_co_borrower: 'सह-उधारकर्ता श्रेणी',
     form_submit: 'मेरी पात्रता जांचें',
 
     result_risk: 'जोखिम',
@@ -514,6 +518,7 @@ export const translations = {
     hero_subtitle: 'ML கடன் தகுதி கணிப்பு, விளக்கக்கூடிய AI முடிவுகள்.',
     hero_cta1: 'கடன் தகுதி சரிபார்',
     hero_cta2: 'மாதிரி வழக்கு',
+    hero_cta_advice: 'நிதி ஆலோசனை பெறுங்கள்',
     hero_img_alt: 'AI நிதி சேவைகள்',
 
     trust_privacy: 'தனியுரிமை-முதல்',
@@ -565,7 +570,7 @@ export const translations = {
     form_gender: 'பாலினம்',
     form_marital: 'திருமண நிலை',
     form_family: 'குடும்ப உறுப்பினர்கள்',
-    form_dependents: 'சார்ந்த குழந்தைகள்',
+    form_dependents: 'சார்ந்த குடும்ப உறுப்பினர்கள்',
     form_city: 'நகரம்',
     form_state: 'மாநிலம்',
     form_job_type: 'வேலை வகை',
@@ -593,6 +598,7 @@ export const translations = {
     form_credit_score: 'கிரெடிட் ஸ்கோர்',
     form_existing_loans: 'இருக்கும் கடன்கள்',
     form_loan_purpose: 'கடன் நோக்கம்',
+    form_co_borrower: 'இணை கடனாளி வகை',
     form_submit: 'தகுதியை சரிபார்',
 
     result_risk: 'ஆபத்து',

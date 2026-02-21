@@ -39,8 +39,19 @@ const BankRecommendations = ({ banks }: BankRecommendationsProps) => {
             className="rounded-lg border border-border p-4"
           >
             <div className="mb-2 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-primary" />
+              <div className="flex items-center gap-3">
+                {bank.logo ? (
+                  <img 
+                    src={bank.logo} 
+                    alt={`${bank.name} logo`}
+                    className="h-8 w-8 rounded object-contain"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
+                ) : null}
+                <Building2 className={`h-4 w-4 text-primary ${bank.logo ? 'hidden' : ''}`} />
                 <span className="font-semibold text-foreground">{bank.name}</span>
               </div>
               <Badge variant="outline" className="bg-secondary text-muted-foreground">

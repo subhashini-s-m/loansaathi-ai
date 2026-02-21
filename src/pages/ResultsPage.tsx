@@ -13,7 +13,7 @@ import type { LoanFormData, AnalysisResult } from '@/types/loan';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Brain, ArrowRight, TrendingUp, Shield, Calculator } from 'lucide-react';
+import { Brain, ArrowRight, TrendingUp, Shield, Calculator, MessageSquare } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 const ResultsPage = () => {
@@ -34,6 +34,20 @@ const ResultsPage = () => {
 
   const prob = result.approval_probability;
   const riskCategory = result.risk_category || (prob >= 65 ? 'Low' : prob >= 40 ? 'Medium' : 'High');
+
+  const openChatWithEligibilityContext = () => {
+    sessionStorage.setItem(
+      'eligibility_chat_context',
+      JSON.stringify({
+        approval_probability: result.approval_probability,
+        risk_category: riskCategory,
+        monthly_income: formData.monthly_income,
+        loan_amount: formData.loan_amount,
+        credit_score: formData.credit_score,
+      }),
+    );
+    navigate('/chat');
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,9 +97,14 @@ const ResultsPage = () => {
                   <p className={`font-bold ${result.emi_affordability === 'Comfortable' ? 'text-risk-low' : result.emi_affordability === 'Stretched' ? 'text-risk-medium' : 'text-risk-high'}`}>{result.emi_affordability}</p>
                 </div>
               </div>
-              <Button variant="saffron" size="lg" onClick={() => navigate('/apply')} className="w-full sm:w-auto">
-                {t('result_view_banks')} <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button variant="saffron" size="lg" onClick={() => navigate('/apply')} className="w-full sm:w-auto">
+                  {t('result_view_banks')} <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="lg" onClick={openChatWithEligibilityContext} className="w-full sm:w-auto">
+                  Discuss in Chat <MessageSquare className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </div>
         </motion.div>

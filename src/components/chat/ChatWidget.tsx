@@ -12,6 +12,20 @@ interface Message {
   content: string;
 }
 
+type VoiceRecognitionResultEvent = {
+  resultIndex?: number;
+  results: ArrayLike<{
+    isFinal: boolean;
+    0?: {
+      transcript?: string;
+    };
+  }>;
+};
+
+type VoiceRecognitionErrorEvent = {
+  error?: string;
+};
+
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 const ChatWidget = () => {
@@ -25,6 +39,9 @@ const ChatWidget = () => {
   const [isListening, setIsListening] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
+  const finalVoiceTranscriptRef = useRef('');
+  const shouldSubmitVoiceRef = useRef(false);
+  const hasVoiceSentRef = useRef(false);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -103,7 +120,11 @@ const ChatWidget = () => {
 
   const toggleVoice = useCallback(() => {
     if (isListening) {
+      shouldSubmitVoiceRef.current = false;
+      finalVoiceTranscriptRef.current = '';
+      hasVoiceSentRef.current = false;
       recognitionRef.current?.stop();
+      recognitionRef.current = null;
       setIsListening(false);
       return;
     }
@@ -111,13 +132,60 @@ const ChatWidget = () => {
     if (!SpeechRecognition) return;
     const recognition = new SpeechRecognition();
     recognition.lang = language === 'hi' ? 'hi-IN' : language === 'ta' ? 'ta-IN' : 'en-IN';
-    recognition.interimResults = false;
-    recognition.onresult = (e: any) => {
-      const text = e.results[0][0].transcript;
-      setInput(text);
-      sendMessage(text);
+
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+
+    finalVoiceTranscriptRef.current = '';
+    shouldSubmitVoiceRef.current = true;
+    hasVoiceSentRef.current = false;
+
+    recognition.onresult = (e: VoiceRecognitionResultEvent) => {
+      let interimTranscript = '';
+      const startIndex = typeof e.resultIndex === 'number' ? e.resultIndex : 0;
+
+      for (let i = startIndex; i < e.results.length; i++) {
+        const transcript = e.results[i]?.[0]?.transcript || '';
+        if (e.results[i]?.isFinal) {
+          finalVoiceTranscriptRef.current += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      const preview = `${finalVoiceTranscriptRef.current} ${interimTranscript}`.trim();
+      if (preview) {
+        setInput(preview);
+      }
     };
-    recognition.onend = () => setIsListening(false);
+
+    recognition.onend = () => {
+      setIsListening(false);
+
+      const finalText = finalVoiceTranscriptRef.current.trim();
+      if (shouldSubmitVoiceRef.current && finalText && !hasVoiceSentRef.current) {
+        hasVoiceSentRef.current = true;
+        setInput(finalText);
+        sendMessage(finalText);
+      }
+
+      shouldSubmitVoiceRef.current = false;
+      finalVoiceTranscriptRef.current = '';
+      recognitionRef.current = null;
+    };
+
+    recognition.onerror = (e: VoiceRecognitionErrorEvent) => {
+      setIsListening(false);
+      shouldSubmitVoiceRef.current = false;
+      finalVoiceTranscriptRef.current = '';
+      recognitionRef.current = null;
+
+      if (e?.error !== 'aborted' && e?.error !== 'no-speech') {
+        console.error('Speech recognition error:', e?.error);
+      }
+    };
+
     recognition.start();
     recognitionRef.current = recognition;
     setIsListening(true);

@@ -17,6 +17,7 @@ export interface LoanFormData {
   secondary_income: boolean;
   // Financial
   monthly_savings: number;
+  monthly_rent: number;
   existing_loans: number;
   total_monthly_expenses: number;
   credit_score: number;
@@ -33,6 +34,7 @@ export interface LoanFormData {
   // Loan Request
   loan_amount: number;
   loan_purpose: string;
+  co_borrower: string;
   loan_tenure: number;
   has_collateral: boolean;
 }
@@ -55,6 +57,7 @@ export interface RoadmapStep {
 
 export interface BankRecommendation {
   name: string;
+  logo?: string;
   interest_rate?: string;
   interestRate?: string;
   match_score?: number;

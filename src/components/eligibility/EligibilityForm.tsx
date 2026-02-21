@@ -29,6 +29,7 @@ const defaults: LoanFormData = {
   income_stability: 'Stable',
   secondary_income: false,
   monthly_savings: 5000,
+  monthly_rent: 8000,
   existing_loans: 1,
   total_monthly_expenses: 15000,
   credit_score: 650,
@@ -43,6 +44,7 @@ const defaults: LoanFormData = {
   has_vehicle_insurance: false,
   loan_amount: 300000,
   loan_purpose: 'Personal',
+  co_borrower: 'None',
   loan_tenure: 60,
   has_collateral: false,
 };
@@ -53,6 +55,7 @@ const incomeStabilityOptions = ['Very Stable', 'Stable', 'Moderate', 'Unstable']
 const genderOptions = ['Male', 'Female', 'Other'];
 const maritalOptions = ['Single', 'Married', 'Divorced', 'Widowed'];
 const loanPurposeOptions = ['Personal', 'Home', 'Vehicle', 'Education', 'Agriculture', 'Business', 'Medical', 'Debt Consolidation'];
+const coBorrowerOptions = ['None', 'Parent/Guardian', 'Spouse', 'Sibling', 'Other'];
 const stateOptions = ['Andhra Pradesh', 'Bihar', 'Delhi', 'Gujarat', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Punjab', 'Rajasthan', 'Tamil Nadu', 'Telangana', 'Uttar Pradesh', 'West Bengal', 'Other'];
 
 const SectionTitle = ({ icon: Icon, title }: { icon: React.ElementType; title: string }) => (
@@ -84,8 +87,8 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
       <SectionTitle icon={User} title={t('form_section_personal')} />
       <div className="grid gap-3 sm:grid-cols-3">
         <div className="space-y-1.5">
-          <Label htmlFor="age">{t('form_age')}</Label>
-          <Input id="age" type="number" min={18} max={80} value={form.age} onChange={e => update('age', Number(e.target.value))} />
+          <Label htmlFor="age">{t('form_age')} *</Label>
+          <Input id="age" type="number" min={18} max={80} required value={form.age} onChange={e => update('age', Number(e.target.value))} placeholder="Required" />
         </div>
         <div className="space-y-1.5">
           <Label>{t('form_gender')}</Label>
@@ -148,14 +151,10 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
           <Input id="employer" value={form.employer_name} onChange={e => update('employer_name', e.target.value)} placeholder="Company name" />
         </div>
       </div>
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-1.5">
           <Label htmlFor="experience">{t('form_experience')}</Label>
           <Input id="experience" type="number" min={0} value={form.years_experience} onChange={e => update('years_experience', Number(e.target.value))} />
-        </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="monthlyIncome">{t('form_income')}</Label>
-          <Input id="monthlyIncome" type="number" min={0} value={form.monthly_income} onChange={e => update('monthly_income', Number(e.target.value))} />
         </div>
         <div className="space-y-1.5">
           <Label>{t('form_income_stability')}</Label>
@@ -174,26 +173,36 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
       <SectionTitle icon={IndianRupee} title={t('form_section_financial')} />
       <div className="grid gap-3 sm:grid-cols-3">
         <div className="space-y-1.5">
-          <Label htmlFor="savings">{t('form_savings')}</Label>
-          <Input id="savings" type="number" min={0} value={form.monthly_savings} onChange={e => update('monthly_savings', Number(e.target.value))} />
+          <Label htmlFor="monthlyIncome">{t('form_income')} *</Label>
+          <Input id="monthlyIncome" type="number" min={0} required value={form.monthly_income} onChange={e => update('monthly_income', Number(e.target.value))} placeholder="Required" />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="expenses">{t('form_expenses')}</Label>
-          <Input id="expenses" type="number" min={0} value={form.total_monthly_expenses} onChange={e => update('total_monthly_expenses', Number(e.target.value))} />
+          <Label htmlFor="savings">{t('form_savings')} *</Label>
+          <Input id="savings" type="number" min={0} required value={form.monthly_savings} onChange={e => update('monthly_savings', Number(e.target.value))} placeholder="Required" />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="existingLoans">{t('form_existing_loans')}</Label>
-          <Input id="existingLoans" type="number" min={0} value={form.existing_loans} onChange={e => update('existing_loans', Number(e.target.value))} />
+          <Label htmlFor="rent">Monthly Rent *</Label>
+          <Input id="rent" type="number" min={0} required value={form.monthly_rent} onChange={e => update('monthly_rent', Number(e.target.value))} placeholder="Required" />
         </div>
       </div>
       <div className="grid gap-3 sm:grid-cols-3">
         <div className="space-y-1.5">
-          <Label htmlFor="creditScore">{t('form_credit_score')}</Label>
-          <Input id="creditScore" type="number" min={300} max={900} value={form.credit_score} onChange={e => update('credit_score', Number(e.target.value))} />
+          <Label htmlFor="expenses">{t('form_expenses')} *</Label>
+          <Input id="expenses" type="number" min={0} required value={form.total_monthly_expenses} onChange={e => update('total_monthly_expenses', Number(e.target.value))} placeholder="Required" />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="bankBalance">{t('form_bank_balance')}</Label>
-          <Input id="bankBalance" type="number" min={0} value={form.bank_balance} onChange={e => update('bank_balance', Number(e.target.value))} />
+          <Label htmlFor="existingLoans">{t('form_existing_loans')} *</Label>
+          <Input id="existingLoans" type="number" min={0} required value={form.existing_loans} onChange={e => update('existing_loans', Number(e.target.value))} placeholder="Required" />
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="creditScore">{t('form_credit_score')} *</Label>
+          <Input id="creditScore" type="number" min={300} max={900} required value={form.credit_score} onChange={e => update('credit_score', Number(e.target.value))} placeholder="Required" />
+        </div>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <Label htmlFor="bankBalance">{t('form_bank_balance')} *</Label>
+          <Input id="bankBalance" type="number" min={0} required value={form.bank_balance} onChange={e => update('bank_balance', Number(e.target.value))} placeholder="Required" />
         </div>
         <div className="flex items-center gap-3 pt-6">
           <Switch checked={form.has_investments} onCheckedChange={v => update('has_investments', v)} />
@@ -244,8 +253,8 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
       <SectionTitle icon={FileText} title={t('form_section_loan')} />
       <div className="grid gap-3 sm:grid-cols-3">
         <div className="space-y-1.5">
-          <Label htmlFor="loanAmount">{t('form_loan_amount')}</Label>
-          <Input id="loanAmount" type="number" min={0} value={form.loan_amount} onChange={e => update('loan_amount', Number(e.target.value))} />
+          <Label htmlFor="loanAmount">{t('form_loan_amount')} *</Label>
+          <Input id="loanAmount" type="number" min={0} required value={form.loan_amount} onChange={e => update('loan_amount', Number(e.target.value))} placeholder="Required" />
         </div>
         <div className="space-y-1.5">
           <Label>{t('form_loan_purpose')}</Label>
@@ -258,6 +267,13 @@ const EligibilityForm = ({ initialData, onSubmit }: EligibilityFormProps) => {
           <Label htmlFor="tenure">{t('form_tenure')}</Label>
           <Input id="tenure" type="number" min={6} max={360} value={form.loan_tenure} onChange={e => update('loan_tenure', Number(e.target.value))} />
         </div>
+      </div>
+      <div className="space-y-1.5">
+        <Label>{t('form_co_borrower')}</Label>
+        <Select value={form.co_borrower} onValueChange={v => update('co_borrower', v)}>
+          <SelectTrigger><SelectValue /></SelectTrigger>
+          <SelectContent>{coBorrowerOptions.map(o => <SelectItem key={o} value={o}>{o}</SelectItem>)}</SelectContent>
+        </Select>
       </div>
       <div className="flex items-center gap-3 mb-4">
         <Switch checked={form.has_collateral} onCheckedChange={v => update('has_collateral', v)} />

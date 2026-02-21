@@ -35,7 +35,7 @@ const SampleCases = () => {
               <h3 className="mb-2 text-lg font-semibold text-foreground">{c.title}</h3>
               <p className="mb-5 flex-1 text-sm text-muted-foreground">{c.description}</p>
               <Link to={`/eligibility?demo=${c.id}`}>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full border-saffron text-saffron hover:bg-saffron/10 hover:border-saffron font-semibold">
                   {t('samples_try')}
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </Button>

@@ -15,15 +15,27 @@ import { useToast } from '@/hooks/use-toast';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
   const { t } = useLanguage();
   const { toast } = useToast();
 
-  const handleLogin = (role: 'citizen' | 'admin') => {
-    if (login(email, password, role)) {
-      toast({ title: role === 'admin' ? t('login_admin') : t('login_citizen'), description: `Welcome, ${email}` });
-      navigate(role === 'admin' ? '/admin' : '/eligibility');
+  const handleLogin = async (role: 'citizen' | 'admin') => {
+    if (!email || !password) {
+      toast({ title: 'Error', description: 'Please enter email and password', variant: 'destructive' });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await login(email, password, role);
+      toast({ title: 'Success', description: `Welcome, ${email}` });
+      navigate('/');
+    } catch (error) {
+      toast({ title: 'Login failed', description: (error as Error).message, variant: 'destructive' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -44,48 +56,48 @@ const LoginPage = () => {
           </div>
 
           <div className="rounded-xl border border-border bg-card p-6 shadow-card">
-            <Tabs defaultValue="citizen">
+            <Tabs defaultValue="signin">
               <TabsList className="w-full mb-6">
-                <TabsTrigger value="citizen" className="flex-1">
-                  <User className="mr-1.5 h-4 w-4" />
-                  {t('login_citizen')}
-                </TabsTrigger>
-                <TabsTrigger value="admin" className="flex-1">
+                <TabsTrigger value="signin" className="flex-1">
                   <Lock className="mr-1.5 h-4 w-4" />
-                  {t('login_admin')}
+                  Sign In
+                </TabsTrigger>
+                <TabsTrigger value="register" className="flex-1">
+                  <User className="mr-1.5 h-4 w-4" />
+                  Register
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="citizen">
-                <p className="mb-4 text-sm text-muted-foreground">{t('login_citizen_desc')}</p>
+              <TabsContent value="signin">
+                <p className="mb-4 text-sm text-muted-foreground">Sign in to your LoansAathi account</p>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="citizen-email">{t('login_email')}</Label>
-                    <Input id="citizen-email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="citizen@example.com" />
+                    <Label htmlFor="signin-email">Email</Label>
+                    <Input id="signin-email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="citizen-pass">{t('login_password')}</Label>
-                    <Input id="citizen-pass" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" />
+                    <Label htmlFor="signin-pass">Password</Label>
+                    <Input id="signin-pass" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" />
                   </div>
-                  <Button variant="saffron" className="w-full" onClick={() => handleLogin('citizen')}>
-                    {t('login_signin')}
+                  <Button variant="saffron" className="w-full" onClick={() => handleLogin('citizen')} disabled={isLoading}>
+                    {isLoading ? 'Signing in...' : 'Sign In'}
                   </Button>
                 </div>
               </TabsContent>
 
-              <TabsContent value="admin">
-                <p className="mb-4 text-sm text-muted-foreground">{t('login_admin_desc')}</p>
+              <TabsContent value="register">
+                <p className="mb-4 text-sm text-muted-foreground">Create your LoansAathi account</p>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="admin-email">{t('login_email')}</Label>
-                    <Input id="admin-email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="admin@nidhisaarthi.gov.in" />
+                    <Label htmlFor="register-email">Email</Label>
+                    <Input id="register-email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="admin-pass">{t('login_password')}</Label>
-                    <Input id="admin-pass" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" />
+                    <Label htmlFor="register-pass">Password</Label>
+                    <Input id="register-pass" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" />
                   </div>
-                  <Button variant="saffron" className="w-full" onClick={() => handleLogin('admin')}>
-                    {t('login_signin')}
+                  <Button variant="saffron" className="w-full" onClick={() => handleLogin('citizen')} disabled={isLoading}>
+                    {isLoading ? 'Creating account...' : 'Register'}
                   </Button>
                 </div>
               </TabsContent>

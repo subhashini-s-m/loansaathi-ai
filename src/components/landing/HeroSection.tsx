@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users } from 'lucide-react';
+import { ArrowRight, Users, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import heroImage from '@/assets/hero-illustration.jpg';
@@ -37,8 +37,14 @@ const HeroSection = () => {
                   <ArrowRight className="ml-1 h-5 w-5" />
                 </Button>
               </Link>
+              <Link to="/chat">
+                <Button variant="hero-outline" size="xl">
+                  <MessageCircle className="mr-1 h-5 w-5" />
+                  {t('hero_cta_advice') || 'Get Financial Advice'}
+                </Button>
+              </Link>
               <Link to="/eligibility?demo=auto-driver">
-                <Button variant="hero-outline" size="lg">
+                <Button variant="outline" size="lg" className="border-saffron text-saffron hover:bg-saffron/10 hover:border-saffron font-semibold">
                   <Users className="mr-1 h-4 w-4" />
                   {t('hero_cta2')}
                 </Button>

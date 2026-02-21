@@ -7,10 +7,10 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import type { Language } from '@/i18n/translations';
 
-const languageOptions: { code: Language; label: string }[] = [
-  { code: 'en', label: '🇬🇧 EN' },
-  { code: 'hi', label: '🇮🇳 हिंदी' },
-  { code: 'ta', label: '🇮🇳 தமிழ்' },
+const languageOptions: { code: Language; label: string; flag: string }[] = [
+  { code: 'en', label: 'EN', flag: '🇬🇧' },
+  { code: 'hi', label: 'हिंदी', flag: '🇮🇳' },
+  { code: 'ta', label: 'தமிழ்', flag: '🇮🇳' },
 ];
 
 const Header = () => {
@@ -22,6 +22,7 @@ const Header = () => {
   const navLinks = [
     { label: t('nav_home'), path: '/' },
     { label: t('nav_eligibility'), path: '/eligibility' },
+    { label: t('nav_chat') || 'Chat', path: '/chat' },
     { label: t('nav_privacy'), path: '/privacy' },
   ];
 
@@ -68,7 +69,9 @@ const Header = () => {
                     ? 'bg-primary text-primary-foreground'
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
+                title={opt.label}
               >
+                <span className="mr-1">{opt.flag}</span>
                 {opt.label}
               </button>
             ))}
